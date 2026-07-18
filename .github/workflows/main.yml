@@ -1,1 +1,46 @@
+name: Generate Banner
 
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: "* * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install pnpm
+        run: corepack enable && corepack prepare pnpm@9 --activate
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Generate banner
+        env:
+          NEVERLAND_KEY: ${{ secrets.NEVERLAND_KEY }}
+          GITHUB_USERNAME: ${{ github.repository_owner }}
+        run: pnpm generate:banner
+
+      - name: Commit changes
+        run: |
+          git config user.name "cuzknothz"
+          git config user.email "cuzknothz@gmail.com"
+          git add banner/finalize_banner.svg
+          git commit -m "chore: update banner" || echo "No changes to commit"
+          git push
