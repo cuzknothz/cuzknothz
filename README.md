@@ -1,1 +1,1 @@
-<img src="banner.svg" width="100%" />
+<img src="./banner/finalize_banner.svg" width="100%" />
