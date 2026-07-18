@@ -5,7 +5,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start" : "node main.js",
+    "generate": "tsx main.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -19,6 +19,8 @@
   },
   "devDependencies": {
     "@types/lodash": "^4.14.195",
-    "@types/node": "^20.2.5"
+    "@types/node": "^20.2.5",
+    "tsx": "^4.23.1",
+    "typescript": "^7.0.2"
   }
 }
