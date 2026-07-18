@@ -599,7 +599,7 @@
                 <text xmlns="http://www.w3.org/2000/svg" id="200_2" fill="white"
                     xml:space="preserve" style="white-space: pre" font-family="Segoe UI"
                     font-size="14" font-weight="500" letter-spacing="0em">
-                    <tspan x="434" y="360.297">2110</tspan>
+                    <tspan x="434" y="360.297">{{COMMITS}}</tspan>
                 </text>
                 <g id="follower">
                     <rect id="Rectangle 3" x="275" y="336" width="45" height="37" fill="#555555" />
@@ -637,7 +637,7 @@
                 <text xmlns="http://www.w3.org/2000/svg" id="2" fill="white" xml:space="preserve"
                     style="white-space: pre" font-family="Segoe UI" font-size="14" font-weight="600"
                     letter-spacing="0em">
-                    <tspan x="293" y="360.297">10</tspan>
+                    <tspan x="293" y="360.297">{{FOLLOWERS}}</tspan>
                 </text>
 
                 <g id="repo">
@@ -664,7 +664,7 @@
                 <text xmlns="http://www.w3.org/2000/svg" id="20" fill="white" xml:space="preserve"
                     style="white-space: pre" font-family="Segoe UI" font-size="14" font-weight="600"
                     letter-spacing="0em">
-                    <tspan x="175" y="360.297">21</tspan>
+                    <tspan x="175" y="360.297">{{REPOS}}</tspan>
                 </text>
 
                 <g id="star">
@@ -692,7 +692,7 @@
                 <text xmlns="http://www.w3.org/2000/svg" id="20_2" fill="white" xml:space="preserve"
                     style="white-space: pre" font-family="Segoe UI" font-size="14" font-weight="600"
                     letter-spacing="0em">
-                    <tspan x="60" y="360.297">33</tspan>
+                    <tspan x="60" y="360.297">{{STARS}}</tspan>
                 </text>
 
             </g>

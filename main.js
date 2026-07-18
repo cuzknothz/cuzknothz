@@ -33,7 +33,7 @@ const getTotalContributions = async () => {
   let count = 0;
   for (let c = 0; c < repoList.length; ++c) {
     const { data: contributors } = await axios.get(
-      `/repos/${USERNAME}/${repoList[c].name}/contributors`
+      `/repos/${USERNAME}/${repoList[c].name}/contributors`,
     );
 
     for (let c = 0; c < contributors.length; ++c) {
@@ -45,21 +45,11 @@ const getTotalContributions = async () => {
   return count;
 };
 
-const getTotalVisitors = async () => {
-  const {
-    data: { total },
-  } = await _axios.get(
-    "https://api.visitorbadge.io/api/status?path=https://github.com/cuzknothz/cuzknothz"
-  );
-  return total;
-};
-
 const PLACEHOLDERS = {
   STARS: getTotalStars(),
   REPOS: getTotalRepos(),
   FOLLOWERS: getTotalFollowers(),
   COMMITS: await getTotalContributions(),
-  VISITORS: await getTotalVisitors(),
 };
 
 const processUpdateFile = (inputPath, outputPath) => {
