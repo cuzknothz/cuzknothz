@@ -5,7 +5,7 @@ on:
     branches:
       - main
   schedule:
-    - cron: "* * * * *"
+    - cron: "*/10 * * * *"
   workflow_dispatch:
 
 permissions:
@@ -55,5 +55,5 @@ jobs:
           git config user.name "cuzknothz"
           git config user.email "cuzknothz@gmail.com"
           git add banner/finalize_banner.svg
-          git commit -m "chore: update banner" || echo "No changes to commit"
+          git commit -m "🤖" || echo "No changes to commit"
           git push
