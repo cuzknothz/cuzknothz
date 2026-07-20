@@ -1,5 +1,4 @@
 import dotenv from "dotenv";
-import _axios from "axios";
 import fs from "fs/promises";
 import path from "path";
 
@@ -29,23 +28,32 @@ dotenv.config();
 const USERNAME = process.env.GITHUB_USERNAME ?? "cuzknothz";
 const API_TOKEN = process.env.NEVERLAND_KEY;
 
-const axios = _axios.create({
-  baseURL: "https://api.github.com/",
-  headers: API_TOKEN ? { Authorization: `Bearer ${API_TOKEN}` } : {},
-});
+async function fetchGitHubJson<T>(pathName: string): Promise<T> {
+  const response = await fetch(`https://api.github.com${pathName}`, {
+    headers: API_TOKEN ? { Authorization: `Bearer ${API_TOKEN}` } : {},
+  });
+
+  if (!response.ok) {
+    throw new Error(
+      `GitHub API request failed: ${response.status} ${response.statusText}`,
+    );
+  }
+
+  return (await response.json()) as T;
+}
 
 async function fetchGitHubStats(): Promise<GitHubStats> {
-  const [{ data: user }, { data: repositoriesResponse }] = await Promise.all([
-    axios.get<GitHubUser>(`/users/${USERNAME}`),
-    axios.get<{ items: GitHubRepository[] }>(
+  const [user, repositoriesResponse] = await Promise.all([
+    fetchGitHubJson<GitHubUser>(`/users/${USERNAME}`),
+    fetchGitHubJson<{ items: GitHubRepository[] }>(
       `/search/repositories?q=user:${USERNAME}&per_page=100`,
     ),
   ]);
 
-  const repositories = repositoriesResponse.items;
+  const repositories = repositoriesResponse.items ?? [];
   const contributorResults = await Promise.allSettled(
     repositories.map((repository) =>
-      axios.get<GitHubContributor[]>(
+      fetchGitHubJson<GitHubContributor[]>(
         `/repos/${USERNAME}/${repository.name}/contributors`,
       ),
     ),
@@ -56,7 +64,7 @@ async function fetchGitHubStats(): Promise<GitHubStats> {
       return total;
     }
 
-    const contributors = result.value.data;
+    const contributors = result.value;
     if (!Array.isArray(contributors)) {
       return total;
     }
